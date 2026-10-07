@@ -1,0 +1,15 @@
+# IDE
+.idea/
+*.iml
+
+# Server phân phối (không thuộc mã nguồn)
+apache-tomcat*/
+tomcat*/
+
+# Biến môi trường thật (giữ .env.example làm mẫu)
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
