@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import Icon, { type IconName } from './Icon';
 import type { Permission } from '../types';
 
 interface Item {
   to: string;
   label: string;
-  icon: string;
+  icon: IconName;
   permission?: Permission;
 }
 interface Group {
@@ -20,35 +21,35 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const visible = (item: Item) => !item.permission || hasPermission(item.permission);
 
   const groups: Group[] = [
-    { title: 'Tổng quan', items: [{ to: '/dashboard', label: 'Trang chủ', icon: '🏠' }] },
+    { title: 'Tổng quan', items: [{ to: '/dashboard', label: 'Trang chủ', icon: 'home' }] },
   ];
 
   if (user.role === 'TENANT') {
     groups.push({
       title: 'Của tôi',
       items: [
-        { to: '/my/requests', label: 'Yêu cầu của tôi', icon: '📋' },
-        { to: '/my/contracts', label: 'Hợp đồng của tôi', icon: '📄' },
-        { to: '/my/invoices', label: 'Hoá đơn của tôi', icon: '🧾' },
-        { to: '/my/maintenance', label: 'Báo hỏng', icon: '🔧' },
+        { to: '/my/requests', label: 'Yêu cầu của tôi', icon: 'inbox' },
+        { to: '/my/contracts', label: 'Hợp đồng của tôi', icon: 'file' },
+        { to: '/my/invoices', label: 'Hoá đơn của tôi', icon: 'receipt' },
+        { to: '/my/maintenance', label: 'Báo hỏng', icon: 'wrench' },
       ],
     });
   }
 
-  const management = [
-    { to: '/buildings', label: 'Toà nhà', icon: '🏢', permission: 'BUILDING_MANAGE' },
-    { to: '/rooms', label: 'Phòng', icon: '🚪', permission: 'ROOM_MANAGE' },
-    { to: '/services', label: 'Dịch vụ', icon: '⚡', permission: 'SERVICE_MANAGE' },
-    { to: '/listings', label: 'Tin đăng', icon: '📢', permission: 'LISTING_MANAGE' },
-    { to: '/requests', label: 'Yêu cầu thuê', icon: '📥', permission: 'LISTING_MANAGE' },
-    { to: '/contracts', label: 'Hợp đồng', icon: '📄', permission: 'CONTRACT_MANAGE' },
-    { to: '/meter-readings', label: 'Chỉ số điện nước', icon: '🔢', permission: 'METER_MANAGE' },
-    { to: '/invoices', label: 'Hoá đơn', icon: '🧾', permission: 'INVOICE_MANAGE' },
-    { to: '/payments', label: 'Thanh toán', icon: '💵', permission: 'PAYMENT_MANAGE' },
-    { to: '/debts', label: 'Công nợ', icon: '⚠️', permission: 'INVOICE_MANAGE' },
-    { to: '/maintenance', label: 'Báo hỏng', icon: '🔧', permission: 'MAINTENANCE_MANAGE' },
-    { to: '/reports', label: 'Báo cáo', icon: '📊', permission: 'REPORT_VIEW' },
-  ] as Item[];
+  const management: Item[] = [
+    { to: '/buildings', label: 'Toà nhà', icon: 'building', permission: 'BUILDING_MANAGE' },
+    { to: '/rooms', label: 'Phòng', icon: 'grid', permission: 'ROOM_MANAGE' },
+    { to: '/services', label: 'Dịch vụ', icon: 'bolt', permission: 'SERVICE_MANAGE' },
+    { to: '/listings', label: 'Tin đăng', icon: 'megaphone', permission: 'LISTING_MANAGE' },
+    { to: '/requests', label: 'Yêu cầu thuê', icon: 'inbox', permission: 'LISTING_MANAGE' },
+    { to: '/contracts', label: 'Hợp đồng', icon: 'file', permission: 'CONTRACT_MANAGE' },
+    { to: '/meter-readings', label: 'Chỉ số điện nước', icon: 'gauge', permission: 'METER_MANAGE' },
+    { to: '/invoices', label: 'Hoá đơn', icon: 'receipt', permission: 'INVOICE_MANAGE' },
+    { to: '/payments', label: 'Thanh toán', icon: 'dollar', permission: 'PAYMENT_MANAGE' },
+    { to: '/debts', label: 'Công nợ', icon: 'alert', permission: 'INVOICE_MANAGE' },
+    { to: '/maintenance', label: 'Báo hỏng', icon: 'wrench', permission: 'MAINTENANCE_MANAGE' },
+    { to: '/reports', label: 'Báo cáo', icon: 'chart', permission: 'REPORT_VIEW' },
+  ];
   if (management.some(visible)) {
     groups.push({ title: 'Quản lý', items: management.filter(visible) });
   }
@@ -57,40 +58,36 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
     groups.push({
       title: 'Hệ thống',
       items: [
-        { to: '/admin/users', label: 'Tài khoản', icon: '👥' },
-        { to: '/admin/audit-logs', label: 'Nhật ký hoạt động', icon: '🕘' },
+        { to: '/admin/users', label: 'Tài khoản', icon: 'users' },
+        { to: '/admin/audit-logs', label: 'Nhật ký hoạt động', icon: 'history' },
       ],
     });
   }
 
   groups.push({
     title: 'Cá nhân',
-    items: [{ to: '/profile', label: 'Hồ sơ', icon: '👤' }],
+    items: [{ to: '/profile', label: 'Hồ sơ', icon: 'user' }],
   });
 
   return (
-    <nav className="flex-1 space-y-6 overflow-y-auto p-4">
+    <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3.5 pb-6 pt-2.5">
       {groups.map((group) => (
         <div key={group.title}>
-          <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <p className="px-3.5 pb-2 pt-4 text-xs font-semibold uppercase tracking-wider text-[#8b93c9]">
             {group.title}
           </p>
-          <ul className="space-y-1">
+          <ul className="flex flex-col gap-1">
             {group.items.map((item) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
                   onClick={onNavigate}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100'
-                    }`
+                    `side-nav-link ${isActive ? 'active' : ''}`
                   }
                 >
-                  <span className="text-base">{item.icon}</span>
-                  {item.label}
+                  <Icon name={item.icon} />
+                  <span>{item.label}</span>
                 </NavLink>
               </li>
             ))}

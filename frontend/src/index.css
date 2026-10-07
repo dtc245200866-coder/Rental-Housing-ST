@@ -4,46 +4,107 @@
 
 @layer base {
   html {
-    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
   }
   body {
-    @apply bg-gray-50 text-gray-900;
-  }
-  .dark body {
-    @apply bg-gray-900 text-gray-100;
+    background-color: #f4f6fb;
+    color: #0f172a;
+    font-family: -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
 
 @layer components {
+  /* ===== Buttons ===== */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
-      transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+    @apply btn bg-[#3b82f6] text-white hover:bg-[#2563eb];
   }
   .btn-secondary {
-    @apply btn border border-gray-300 bg-white text-gray-700 hover:bg-gray-50
-      dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700;
+    @apply btn border border-[#e2e8f0] bg-white text-[#0f172a] hover:border-[#3b82f6] hover:text-[#3b82f6];
   }
   .btn-danger {
-    @apply btn bg-red-600 text-white hover:bg-red-700;
+    @apply btn bg-[#dc2626] text-white hover:bg-[#b91c1c];
   }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  /* ===== Forms ===== */
   .input {
-    @apply w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900
-      placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500
-      dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
+    @apply w-full rounded-lg border border-[#e2e8f0] bg-white px-3 py-2 text-sm text-[#0f172a] placeholder:text-[#94a3b8] focus:border-[#3b82f6] focus:outline-none focus:ring-2 focus:ring-[#bfdbfe];
   }
   .label {
-    @apply mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300;
+    @apply mb-1 block text-sm font-semibold text-[#0f172a];
   }
+
+  /* ===== Cards ===== */
   .card {
-    @apply rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800;
+    @apply rounded-xl border border-[#e2e8f0] bg-white p-5;
   }
+  .panel-title {
+    @apply text-base font-bold text-[#0f172a];
+  }
+
+  /* ===== Table ===== */
   .table-th {
-    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400;
+    @apply bg-[#f8fafc] px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-[#64748b];
   }
   .table-td {
-    @apply px-4 py-3 text-sm text-gray-700 dark:text-gray-200;
+    @apply px-4 py-3 text-sm text-[#0f172a];
+  }
+
+  /* ===== Sidebar (hrmanagement style) ===== */
+  .sidebar-bg {
+    background: linear-gradient(180deg, #2c3578 0%, #1f2459 45%, #151938 100%);
+  }
+  .side-nav-link {
+    @apply flex items-center gap-3 rounded-[10px] px-3.5 py-[11px] text-sm font-medium text-[#c3c9ec] transition-colors hover:bg-white/10 hover:text-white;
+  }
+  .side-nav-link svg {
+    @apply h-5 w-5 shrink-0;
+  }
+  .side-nav-link.active {
+    @apply bg-white font-semibold text-[#1f2353] shadow-[0_6px_18px_rgba(0,0,0,0.28)];
+  }
+  .side-nav-link.active svg {
+    @apply text-[#3c51a0];
+  }
+
+  /* ===== Stat cards ===== */
+  .stat-icon-box {
+    @apply flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[14px];
+  }
+  .stat-icon-box svg {
+    @apply h-[26px] w-[26px];
+  }
+  .tint-blue {
+    @apply bg-[#e8effc] text-[#2f5fd0];
+  }
+  .tint-green {
+    @apply bg-[#e4f7ee] text-[#17a05e];
+  }
+  .tint-amber {
+    @apply bg-[#fdf3e3] text-[#d98a1f];
+  }
+  .tint-rose {
+    @apply bg-[#fdebf0] text-[#e04f77];
+  }
+  .tint-violet {
+    @apply bg-[#efeafd] text-[#7a5cf0];
+  }
+  .tint-cyan {
+    @apply bg-[#e4f5fb] text-[#1592b8];
+  }
+
+  /* ===== Login ===== */
+  .login-body {
+    background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+  }
+  .login-card {
+    @apply w-[380px] rounded-2xl bg-white p-9 shadow-[0_20px_60px_rgba(0,0,0,0.3)];
   }
 }

@@ -48,19 +48,19 @@ export default function Register() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert message={error} onClose={() => setError('')} />}
         <FormField label="Họ tên" required>
-          <input className="input" value={form.name} onChange={set('name')} required />
+          <input className="input" value={form.name} onChange={set('name')} placeholder="NGUYEN VAN A" required />
         </FormField>
         <FormField label="Số điện thoại" required>
-          <input className="input" value={form.phone} onChange={set('phone')} placeholder="0xxxxxxxxx" required />
+          <input className="input" value={form.phone} onChange={set('phone')} placeholder="Bắt đầu bằng 0" required />
         </FormField>
         <FormField label="Email" required>
-          <input className="input" type="email" value={form.email} onChange={set('email')} required />
+          <input className="input" type="email" value={form.email} onChange={set('email')} placeholder="example@email.com" required />
         </FormField>
         <FormField label="Mật khẩu" required>
-          <input className="input" type="password" value={form.password} onChange={set('password')} required />
+          <input className="input" type="password" value={form.password} onChange={set('password')} placeholder="Mật khẩu dài ít nhất 8 ký tự" required />
         </FormField>
         <FormField label="Xác nhận mật khẩu" required>
-          <input className="input" type="password" value={form.confirm} onChange={set('confirm')} required />
+          <input className="input" type="password" value={form.confirm} onChange={set('confirm')} placeholder="Xác nhận mật khẩu" required />
         </FormField>
         <button className="btn-primary w-full" disabled={submitting}>
           {submitting ? 'Đang đăng ký…' : 'Đăng ký'}

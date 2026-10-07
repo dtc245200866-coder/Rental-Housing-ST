@@ -11,20 +11,18 @@ export default function AuthLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+    <div className="login-body flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
           <Link to="/" className="inline-flex items-center gap-2">
-            <span className="text-3xl">🏠</span>
-            <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
-              Rental Housing
-            </span>
+            <span className="text-3xl"></span>
+            <span className="text-2xl font-bold text-white">Hệ Thống Cho Thuê Phòng</span>
           </Link>
         </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h1>
-          {subtitle && <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>}
-          <div className="mt-5">{children}</div>
+        <div className="rounded-2xl bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
+          <h1 className="text-center text-2xl font-bold text-[#0f172a]">{title}</h1>
+          {subtitle && <p className="mt-1 text-center text-sm text-[#64748b]">{subtitle}</p>}
+          <div className="mt-6">{children}</div>
         </div>
       </div>
     </div>

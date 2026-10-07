@@ -5,6 +5,7 @@ import { useAuth } from '../../auth/AuthContext';
 import { formatMoney } from '../../utils/format';
 import { ROLE_LABELS } from '../../utils/constants';
 import type { DebtSummary, ReportSummary } from '../../types';
+import Icon from '../../components/Icon';
 
 export default function Home() {
   const { user, hasPermission } = useAuth();
@@ -22,66 +23,66 @@ export default function Home() {
 
   if (!user) return null;
 
+  const stats: { icon: Parameters<typeof Icon>[0]['name']; tint: string; value: string; label: string }[] = [];
+  if (report) {
+    stats.push({ icon: 'building', tint: 'tint-blue', value: `${report.occupancyRate}%`, label: 'Tỉ lệ lấp đầy' });
+    stats.push({ icon: 'grid', tint: 'tint-green', value: `${report.rentedRooms}/${report.totalRooms}`, label: 'Phòng đang thuê' });
+  }
+  if (debt) {
+    stats.push({ icon: 'alert', tint: 'tint-rose', value: formatMoney(debt.totalRemaining), label: 'Tổng công nợ' });
+    stats.push({ icon: 'dollar', tint: 'tint-amber', value: String(debt.count), label: 'Phòng đang nợ' });
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          Xin chào, {user.name} 👋
-        </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Bạn đang đăng nhập với vai trò {ROLE_LABELS[user.role]}.
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[#0f172a]">Tổng quan</h1>
+          <p className="mt-0.5 text-sm text-[#64748b]">
+            Xin chào, {user.name} — {ROLE_LABELS[user.role]}.
+          </p>
+        </div>
       </div>
 
-      {(report || debt) && (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {report && (
-            <>
-              <div className="card">
-                <p className="text-sm text-gray-500 dark:text-gray-400">Tỉ lệ lấp đầy</p>
-                <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {report.occupancyRate}%
-                </p>
-                <p className="text-xs text-gray-400">
-                  {report.rentedRooms}/{report.totalRooms} phòng đang thuê
-                </p>
+      {stats.length > 0 && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {stats.map((s, i) => (
+            <div key={i} className="card flex items-center gap-3.5 !p-[18px] transition-transform hover:-translate-y-0.5 hover:shadow-md">
+              <div className={`stat-icon-box ${s.tint}`}>
+                <Icon name={s.icon} />
               </div>
-            </>
-          )}
-          {debt && (
-            <div className="card">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Tổng công nợ</p>
-              <p className="mt-1 text-2xl font-bold text-red-600 dark:text-red-400">
-                {formatMoney(debt.totalRemaining)}
-              </p>
-              <p className="text-xs text-gray-400">{debt.count} phòng đang nợ</p>
+              <div>
+                <div className="text-[22px] font-bold leading-tight text-[#0f172a]">{s.value}</div>
+                <div className="text-[13px] text-[#64748b]">{s.label}</div>
+              </div>
             </div>
-          )}
-          <div className="card">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Truy cập nhanh</p>
-            <div className="mt-2 flex flex-col gap-1 text-sm">
-              {user.role === 'TENANT' ? (
-                <>
-                  <Link to="/my/invoices" className="text-primary-600 hover:underline dark:text-primary-400">Hoá đơn của tôi</Link>
-                  <Link to="/my/requests" className="text-primary-600 hover:underline dark:text-primary-400">Yêu cầu thuê của tôi</Link>
-                  <Link to="/my/maintenance" className="text-primary-600 hover:underline dark:text-primary-400">Báo hỏng</Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/listings" className="text-primary-600 hover:underline dark:text-primary-400">Quản lý tin đăng</Link>
-                  <Link to="/invoices" className="text-primary-600 hover:underline dark:text-primary-400">Phát hành hoá đơn</Link>
-                  <Link to="/requests" className="text-primary-600 hover:underline dark:text-primary-400">Yêu cầu thuê</Link>
-                </>
-              )}
-            </div>
-          </div>
+          ))}
         </div>
       )}
 
+      <div className="card">
+        <h2 className="panel-title">Truy cập nhanh</h2>
+        <div className="mt-3 flex flex-col gap-1.5 text-sm">
+          {user.role === 'TENANT' ? (
+            <>
+              <Link to="/my/invoices" className="text-[#3b82f6] hover:underline">Hoá đơn của tôi</Link>
+              <Link to="/my/requests" className="text-[#3b82f6] hover:underline">Yêu cầu thuê của tôi</Link>
+              <Link to="/my/maintenance" className="text-[#3b82f6] hover:underline">Báo hỏng</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/listings" className="text-[#3b82f6] hover:underline">Quản lý tin đăng</Link>
+              <Link to="/invoices" className="text-[#3b82f6] hover:underline">Phát hành hoá đơn</Link>
+              <Link to="/requests" className="text-[#3b82f6] hover:underline">Yêu cầu thuê</Link>
+            </>
+          )}
+        </div>
+      </div>
+
       {user.role === 'TENANT' && (
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100">Tìm phòng mới?</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <h2 className="panel-title">Tìm phòng mới?</h2>
+          <p className="mt-1 text-sm text-[#64748b]">
             Xem các tin đăng đang hiển thị và gửi yêu cầu thuê ngay.
           </p>
           <Link to="/" className="btn-primary mt-3">Tìm phòng</Link>
