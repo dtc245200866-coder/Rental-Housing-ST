@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
-import Icon from './Icon';
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,15 +9,12 @@ export default function Layout() {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar desktop */}
-      <aside className="sidebar-bg hidden w-64 flex-col shadow-[3px_0_20px_rgba(16,20,50,0.16)] lg:flex">
-        <div className="flex items-center gap-3 px-5 pb-5 pt-6">
-          <div className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-white/15 text-white">
-            <Icon name="home" className="h-[22px] w-[22px]" />
-          </div>
-          <div>
-            <div className="text-base font-bold leading-tight text-white">Quản Lý Phòng Trọ</div>
-            <div className="mt-0.5 text-xs text-[#a5addd]">Rental Housing</div>
-          </div>
+      <aside className="hidden w-64 flex-col border-r border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 lg:flex">
+        <div className="flex h-16 items-center gap-2 border-b border-gray-200 px-4 dark:border-gray-700">
+          <span className="text-2xl"></span>
+          <span className="text-sm font-bold text-primary-600 dark:text-primary-400">
+            Rental Housing
+          </span>
         </div>
         <Sidebar />
       </aside>
@@ -27,10 +23,12 @@ export default function Layout() {
       {menuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setMenuOpen(false)} />
-          <aside className="sidebar-bg absolute left-0 top-0 flex h-full w-64 flex-col">
-            <div className="flex items-center justify-between px-5 py-6">
-              <div className="text-base font-bold text-white">Quản Lý Phòng Trọ</div>
-              <button onClick={() => setMenuOpen(false)} className="text-[#c3c9ec]" aria-label="Đóng">
+          <aside className="absolute left-0 top-0 flex h-full w-64 flex-col bg-white dark:bg-gray-800">
+            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-700">
+              <span className="text-sm font-bold text-primary-600 dark:text-primary-400">
+                Rental Housing
+              </span>
+              <button onClick={() => setMenuOpen(false)} className="text-gray-400" aria-label="Đóng">
                 ✕
               </button>
             </div>
@@ -41,7 +39,7 @@ export default function Layout() {
 
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar onMenuClick={() => setMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-6 sm:p-7">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           <Outlet />
         </main>
       </div>
