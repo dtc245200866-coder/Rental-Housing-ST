@@ -42,7 +42,7 @@ export default function PublicSearch() {
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl">🏠</span>
             <span className="text-lg font-bold text-primary-600 dark:text-primary-400">
-              Rental Housing
+              Quản Lý Phòng Trọ
             </span>
           </Link>
           <div className="flex items-center gap-2">

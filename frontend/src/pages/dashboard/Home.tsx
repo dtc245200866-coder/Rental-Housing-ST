@@ -37,8 +37,8 @@ export default function Home() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0f172a]">Tổng quan</h1>
-          <p className="mt-0.5 text-sm text-[#64748b]">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Tổng quan</h1>
+          <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
             Xin chào, {user.name} — {ROLE_LABELS[user.role]}.
           </p>
         </div>
@@ -52,8 +52,8 @@ export default function Home() {
                 <Icon name={s.icon} />
               </div>
               <div>
-                <div className="text-[22px] font-bold leading-tight text-[#0f172a]">{s.value}</div>
-                <div className="text-[13px] text-[#64748b]">{s.label}</div>
+                <div className="text-2xl font-bold leading-tight text-gray-900 dark:text-gray-100">{s.value}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{s.label}</div>
               </div>
             </div>
           ))}
@@ -65,15 +65,15 @@ export default function Home() {
         <div className="mt-3 flex flex-col gap-1.5 text-sm">
           {user.role === 'TENANT' ? (
             <>
-              <Link to="/my/invoices" className="text-[#3b82f6] hover:underline">Hoá đơn của tôi</Link>
-              <Link to="/my/requests" className="text-[#3b82f6] hover:underline">Yêu cầu thuê của tôi</Link>
-              <Link to="/my/maintenance" className="text-[#3b82f6] hover:underline">Báo hỏng</Link>
+              <Link to="/my/invoices" className="text-primary-600 hover:underline dark:text-primary-400">Hoá đơn của tôi</Link>
+              <Link to="/my/requests" className="text-primary-600 hover:underline dark:text-primary-400">Yêu cầu thuê của tôi</Link>
+              <Link to="/my/maintenance" className="text-primary-600 hover:underline dark:text-primary-400">Báo hỏng</Link>
             </>
           ) : (
             <>
-              <Link to="/listings" className="text-[#3b82f6] hover:underline">Quản lý tin đăng</Link>
-              <Link to="/invoices" className="text-[#3b82f6] hover:underline">Phát hành hoá đơn</Link>
-              <Link to="/requests" className="text-[#3b82f6] hover:underline">Yêu cầu thuê</Link>
+              <Link to="/listings" className="text-primary-600 hover:underline dark:text-primary-400">Quản lý tin đăng</Link>
+              <Link to="/invoices" className="text-primary-600 hover:underline dark:text-primary-400">Phát hành hoá đơn</Link>
+              <Link to="/requests" className="text-primary-600 hover:underline dark:text-primary-400">Yêu cầu thuê</Link>
             </>
           )}
         </div>
@@ -82,7 +82,7 @@ export default function Home() {
       {user.role === 'TENANT' && (
         <div className="card">
           <h2 className="panel-title">Tìm phòng mới?</h2>
-          <p className="mt-1 text-sm text-[#64748b]">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Xem các tin đăng đang hiển thị và gửi yêu cầu thuê ngay.
           </p>
           <Link to="/" className="btn-primary mt-3">Tìm phòng</Link>

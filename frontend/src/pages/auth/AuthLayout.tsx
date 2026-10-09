@@ -15,8 +15,8 @@ export default function AuthLayout({
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
           <Link to="/" className="inline-flex items-center gap-2">
-            <span className="text-3xl"></span>
-            <span className="text-2xl font-bold text-white">Hệ Thống Cho Thuê Phòng</span>
+            <span className="text-3xl">🏠</span>
+            <span className="text-2xl font-bold text-white">Quản Lý Phòng Trọ</span>
           </Link>
         </div>
         <div className="rounded-2xl bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)]">

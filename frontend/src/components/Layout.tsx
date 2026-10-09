@@ -9,12 +9,10 @@ export default function Layout() {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar desktop */}
-      <aside className="hidden w-64 flex-col border-r border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 lg:flex">
-        <div className="flex h-16 items-center gap-2 border-b border-gray-200 px-4 dark:border-gray-700">
-          <span className="text-2xl"></span>
-          <span className="text-sm font-bold text-primary-600 dark:text-primary-400">
-            Rental Housing
-          </span>
+      <aside className="sidebar-bg hidden w-64 flex-col lg:flex">
+        <div className="flex h-16 items-center gap-2 border-b border-white/10 px-4">
+          <span className="text-2xl">🏠</span>
+          <span className="text-sm font-bold text-white">Quản Lý Phòng Trọ</span>
         </div>
         <Sidebar />
       </aside>
@@ -23,12 +21,10 @@ export default function Layout() {
       {menuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setMenuOpen(false)} />
-          <aside className="absolute left-0 top-0 flex h-full w-64 flex-col bg-white dark:bg-gray-800">
-            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-700">
-              <span className="text-sm font-bold text-primary-600 dark:text-primary-400">
-                Rental Housing
-              </span>
-              <button onClick={() => setMenuOpen(false)} className="text-gray-400" aria-label="Đóng">
+          <aside className="sidebar-bg absolute left-0 top-0 flex h-full w-64 flex-col">
+            <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
+              <span className="text-sm font-bold text-white">Quản Lý Phòng Trọ</span>
+              <button onClick={() => setMenuOpen(false)} className="text-[#c3c9ec] hover:text-white" aria-label="Đóng">
                 ✕
               </button>
             </div>

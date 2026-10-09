@@ -159,7 +159,7 @@ export default function Login() {
   </div>
 </FormField>
         <div className="text-center">
-          <Link to="/forgot-password" className="text-sm text-primary-600 hover:underline dark:text-primary-400 text-align: center">
+          <Link to="/forgot-password" className="text-sm text-primary-600 hover:underline dark:text-primary-400">
             Quên mật khẩu?
           </Link>
         </div>
