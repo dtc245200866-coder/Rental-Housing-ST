@@ -37,7 +37,7 @@ export default function Home() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0f172a]">Tổng quannnn</h1>
+          <h1 className="text-2xl font-bold text-[#0f172a]">Tổng quan</h1>
           <p className="mt-0.5 text-sm text-[#64748b]">
             Xin chào, {user.name} — {ROLE_LABELS[user.role]}.
           </p>
