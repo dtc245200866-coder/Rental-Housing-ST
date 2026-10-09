@@ -37,6 +37,26 @@ docker compose up --build
 
 Các biến môi trường cần thiết xem trong `.env.example` (sao chép thành `.env` nếu cần).
 
+## Chạy bằng Docker với hot reload (phát triển)
+
+Khi sửa code trong `frontend/src`, giao diện tự cập nhật ngay lập tức mà không cần build lại:
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+- Frontend (Vite dev server + hot reload): http://localhost:5173
+- Backend API: http://localhost:8080
+- PostgreSQL: localhost:5432 (db `rental_housing`, user `postgres`)
+
+Cơ chế: `frontend` mount toàn bộ thư mục `frontend/` vào container, Vite bật
+`usePolling` (cần thiết trên Windows/Docker) nên mọi thay đổi file đều kích hoạt HMR.
+`node_modules` trong container được giữ bằng volume ẩn để không bị ghi đè bởi máy host.
+Proxy `/api` và `/uploads` trỏ tới service `backend` (qua biến `VITE_PROXY_TARGET`).
+
+> Lưu ý: dừng stack production (`docker compose down`) trước khi chạy file dev để
+> tránh xung đột cổng 5173/8080/5432.
+
 ## Chạy thủ công (phát triển)
 
 ### 1. Cơ sở dữ liệu PostgreSQL

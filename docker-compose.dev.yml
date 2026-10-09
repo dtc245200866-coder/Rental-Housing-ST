@@ -1,14 +1,55 @@
+# Môi trường phát triển: frontend chạy Vite dev server với hot reload.
+# Dùng: docker compose -f docker-compose.dev.yml up --build
+# Khi sửa file trong frontend/src, giao diện tự cập nhật ngay (không cần build lại).
 services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: rental_housing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-rental-housing-network-secret-key-please-change-in-production-0123456789}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rental_housing
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads:/app/uploads
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      - backend
     ports:
       - "5173:5173"
     volumes:
+      # Mount source để hot reload, giữ node_modules trong container bằng volume ẩn.
       - ./frontend:/app
       - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
-    restart: unless-stoppeds
+      VITE_PROXY_TARGET: http://backend:8080
+
+volumes:
+  pgdata:
+  uploads:
