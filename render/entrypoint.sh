@@ -8,6 +8,15 @@ PORT="${PORT:-10000}"
 # còn PostgreSQL JDBC driver cần jdbc:postgresql://. Chuẩn hoá lại nếu cần.
 if [ -n "$SPRING_DATASOURCE_URL" ]; then
   SPRING_DATASOURCE_URL="$(printf '%s' "$SPRING_DATASOURCE_URL" | sed 's#^postgres://#jdbc:postgresql://#; s#^postgresql://#jdbc:postgresql://#')"
+
+  # Render yêu cầu SSL cho kết nối PostgreSQL (kể cả internal). Thêm sslmode=require
+  # nếu URL chưa có, để tránh lỗi "Unable to determine Dialect" do không nối được DB.
+  case "$SPRING_DATASOURCE_URL" in
+    *sslmode=*) : ;;
+    *\?*)       SPRING_DATASOURCE_URL="${SPRING_DATASOURCE_URL}&sslmode=require" ;;
+    *)          SPRING_DATASOURCE_URL="${SPRING_DATASOURCE_URL}?sslmode=require" ;;
+  esac
+
   export SPRING_DATASOURCE_URL
 fi
 
