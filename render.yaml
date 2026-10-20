@@ -1,0 +1,49 @@
+# =============================================================================
+# Render Blueprint — triển khai toàn bộ rental-housing-network bằng 1 cú bấm.
+#
+# Cách dùng:
+#   1. Commit & push các file này lên GitHub.
+#   2. Render Dashboard → New → Blueprint → chọn repo này.
+#   3. Render tự tạo: 1 PostgreSQL + 1 Web Service (frontend + backend chung).
+#
+# Lưu ý gói Free:
+#   - Web Service ngủ sau ~15 phút không có request (lần truy cập đầu sẽ chậm).
+#   - PostgreSQL Free tự huỷ sau 90 ngày (nên nâng cấp hoặc backup định kỳ).
+#   - KHÔNG có ổ đĩa bền vững: ảnh phòng upload vào uploads/ sẽ mất khi redeploy.
+#     (Dữ liệu trong PostgreSQL vẫn bền vững.)
+# =============================================================================
+
+databases:
+  - name: rental-housing-db
+    plan: free
+    databaseName: rental_housing
+
+services:
+  - type: web
+    name: rental-housing
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/public/listings
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: rental-housing-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: rental-housing-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: rental-housing-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      # Email (Gmail App Password). sync: false => set thủ công trên dashboard
+      # sau khi tạo; để trống nếu chỉ chạy demo (không gửi được email xác minh).
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
